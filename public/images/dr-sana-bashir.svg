@@ -1,0 +1,18 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F0F9FF"/>
+  <circle cx="200" cy="115" r="54" fill="#E0F2FE" stroke="#0F766E" stroke-width="2"/>
+  <!-- Professional female doctor silhouette with stethoscope and hijab/medical headscarf -->
+  <path d="M165 110C165 85 180 70 200 70C220 70 235 85 235 110C235 125 228 135 220 142C215 146 205 148 200 148C195 148 185 146 180 142C172 135 165 125 165 110Z" fill="#155E75"/>
+  <ellipse cx="200" cy="118" rx="20" ry="24" fill="#FDE68A" opacity="0.6"/>
+  <!-- Doctor White Coat & Stethoscope -->
+  <path d="M130 260C130 200 160 170 200 170C240 170 270 200 270 260H130Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <path d="M185 170L195 230L200 260L205 230L215 170H185Z" fill="#E2E8F0"/>
+  <!-- Teal Lapel & Stethoscope -->
+  <path d="M175 175C175 205 190 220 200 220C210 220 225 205 225 175" stroke="#0F766E" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <circle cx="200" cy="223" r="5" fill="#0F766E"/>
+  <!-- Medical Badge -->
+  <rect x="220" y="200" width="16" height="22" rx="3" fill="#155E75"/>
+  <line x1="223" y1="205" x2="233" y2="205" stroke="#FFFFFF" stroke-width="1.5"/>
+  <line x1="223" y1="209" x2="230" y2="209" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="200" y="285" font-family="sans-serif" font-size="13" font-weight="600" fill="#0F766E" text-anchor="middle">Lady Dr. Sana Bashir • Gynaecologist</text>
+</svg>

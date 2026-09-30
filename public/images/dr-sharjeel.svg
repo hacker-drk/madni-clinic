@@ -1,0 +1,19 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F0F9FF"/>
+  <circle cx="200" cy="115" r="54" fill="#E0F2FE" stroke="#155E75" stroke-width="2"/>
+  <!-- Professional male doctor hair & head -->
+  <path d="M172 100C172 75 185 68 200 68C215 68 228 75 228 100C228 115 222 135 200 135C178 135 172 115 172 100Z" fill="#1E293B"/>
+  <ellipse cx="200" cy="118" rx="20" ry="24" fill="#FDE68A" opacity="0.6"/>
+  <!-- Doctor White Coat & Shirt & Tie -->
+  <path d="M130 260C130 195 160 168 200 168C240 168 270 195 270 260H130Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <path d="M195 168L200 185L205 168H195Z" fill="#0F766E"/>
+  <path d="M200 185L197 225L200 240L203 225L200 185Z" fill="#155E75"/>
+  <!-- Stethoscope -->
+  <path d="M172 170C172 208 188 225 200 225C212 225 228 208 228 170" stroke="#0F766E" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <circle cx="200" cy="228" r="5" fill="#0F766E"/>
+  <!-- Specialist Badge -->
+  <rect x="222" y="195" width="18" height="24" rx="3" fill="#0F766E"/>
+  <line x1="225" y1="201" x2="237" y2="201" stroke="#FFFFFF" stroke-width="1.5"/>
+  <line x1="225" y1="206" x2="234" y2="206" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="200" y="285" font-family="sans-serif" font-size="13" font-weight="600" fill="#155E75" text-anchor="middle">Dr. Sharjeel • Skin Specialist – Medical Specialist</text>
+</svg>

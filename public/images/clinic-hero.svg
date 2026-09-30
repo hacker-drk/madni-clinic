@@ -1,0 +1,54 @@
+<svg width="600" height="450" viewBox="0 0 600 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="450" rx="16" fill="#F8FAFC"/>
+  <!-- Clinic Room Backdrop -->
+  <rect x="20" y="20" width="560" height="410" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  
+  <!-- Subtle Medical Ambient Grid & Light Blue Background Panel -->
+  <rect x="40" y="40" width="520" height="220" rx="8" fill="#F0F9FF"/>
+  <circle cx="500" cy="100" r="70" fill="#E0F2FE" opacity="0.6"/>
+  
+  <!-- Clinic Sign / Badge on Wall -->
+  <rect x="60" y="60" width="180" height="50" rx="8" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1.5"/>
+  <rect x="72" y="70" width="30" height="30" rx="6" fill="#155E75"/>
+  <rect x="84" y="76" width="6" height="18" rx="2" fill="#FFFFFF"/>
+  <rect x="78" y="82" width="18" height="6" rx="2" fill="#FFFFFF"/>
+  <text x="112" y="85" font-family="sans-serif" font-size="12" font-weight="800" fill="#155E75">MADNI CLINIC</text>
+  <text x="112" y="99" font-family="sans-serif" font-size="9" font-weight="600" fill="#0F766E">D.I. KHAN</text>
+
+  <!-- Doctor Consultation Desk & Stethoscope -->
+  <rect x="40" y="260" width="520" height="150" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <line x1="40" y1="260" x2="560" y2="260" stroke="#CBD5E1" stroke-width="3"/>
+  
+  <!-- Medical Tablet / Appointment System Display -->
+  <rect x="80" y="170" width="160" height="120" rx="8" fill="#0F172A" stroke="#334155" stroke-width="3"/>
+  <rect x="86" y="176" width="148" height="108" rx="4" fill="#FFFFFF"/>
+  <rect x="94" y="186" width="70" height="8" rx="3" fill="#155E75"/>
+  <rect x="94" y="202" width="132" height="16" rx="4" fill="#E0F2FE"/>
+  <text x="100" y="214" font-family="sans-serif" font-size="8" font-weight="700" fill="#0369A1">ONLINE APPOINTMENTS ACTIVE</text>
+  <rect x="94" y="226" width="60" height="18" rx="3" fill="#16A34A"/>
+  <text x="104" y="238" font-family="sans-serif" font-size="8" font-weight="700" fill="#FFFFFF">VERIFIED SLOTS</text>
+  
+  <!-- Stethoscope on Desk -->
+  <path d="M280 230 C280 320 350 330 380 270" stroke="#155E75" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <circle cx="380" cy="265" r="14" fill="#FFFFFF" stroke="#0F766E" stroke-width="4"/>
+  <circle cx="380" cy="265" r="5" fill="#155E75"/>
+  
+  <!-- Clinical Care Trust Badges Floating -->
+  <g transform="translate(360, 80)">
+    <rect width="180" height="52" rx="10" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+    <circle cx="28" cy="26" r="16" fill="#DCFCE7"/>
+    <path d="M22 26L26 30L34 22" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="52" y="23" font-family="sans-serif" font-size="11" font-weight="700" fill="#0F172A">Quality Healthcare</text>
+    <text x="52" y="38" font-family="sans-serif" font-size="9" font-weight="500" fill="#475569">Compassion &amp; Care</text>
+  </g>
+
+  <g transform="translate(360, 145)">
+    <rect width="180" height="52" rx="10" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+    <circle cx="28" cy="26" r="16" fill="#E0F2FE"/>
+    <!-- Medical Cross -->
+    <rect x="26" y="18" width="4" height="16" rx="1" fill="#155E75"/>
+    <rect x="20" y="24" width="16" height="4" rx="1" fill="#155E75"/>
+    <text x="52" y="23" font-family="sans-serif" font-size="11" font-weight="700" fill="#0F172A">D.I. Khan Clinic</text>
+    <text x="52" y="38" font-family="sans-serif" font-size="9" font-weight="500" fill="#475569">Gillani Town Location</text>
+  </g>
+</svg>
