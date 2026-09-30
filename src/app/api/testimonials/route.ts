@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -87,6 +88,7 @@ export async function PATCH(request: NextRequest) {
     db.prepare(`UPDATE testimonials SET ${updates.join(', ')} WHERE id = ?`).run(...values);
 
     const updated = db.prepare('SELECT * FROM testimonials WHERE id = ?').get(id);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, testimonial: updated });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
@@ -110,6 +112,7 @@ export async function DELETE(request: NextRequest) {
     const db = getDb();
     db.prepare('DELETE FROM testimonials WHERE id = ?').run(id);
 
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, message: 'Testimonial deleted' });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });

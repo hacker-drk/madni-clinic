@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     'Comprehensive healthcare services at Madni Clinic D.I. Khan: Gynaecology, Antenatal care, Skin consultations, and Specialist Medical Assessments.',
 };
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default function ServicesPage() {

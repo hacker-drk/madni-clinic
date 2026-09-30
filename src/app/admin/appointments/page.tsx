@@ -16,6 +16,7 @@ import {
   MessageCircle,
   RefreshCw,
   FileText,
+  Trash2,
 } from 'lucide-react';
 
 export default function AdminAppointmentsPage() {
@@ -90,6 +91,23 @@ export default function AdminAppointmentsPage() {
       }
     } catch (e) {
       console.error('Update status error', e);
+    }
+  };
+
+  const handleDeleteAppointment = async (id: number) => {
+    if (!confirm('Are you sure you want to permanently delete this appointment?')) return;
+    try {
+      const res = await fetch(`/api/appointments/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setAppointments((prev) => prev.filter((a) => a.id !== id));
+        if (selectedApt?.id === id) {
+          setSelectedApt(null);
+        }
+      } else {
+        alert('Failed to delete appointment.');
+      }
+    } catch (e) {
+      console.error('Error deleting appointment', e);
     }
   };
 
@@ -317,6 +335,16 @@ export default function AdminAppointmentsPage() {
                           Cancel
                         </button>
                       )}
+
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteAppointment(apt.id)}
+                        className="btn btn-outline btn-sm"
+                        style={{ color: '#DC2626', borderColor: '#FECACA', padding: '0.3rem 0.55rem' }}
+                        title="Delete Appointment"
+                      >
+                        <Trash2 size={14} />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -457,6 +485,15 @@ export default function AdminAppointmentsPage() {
                   style={{ color: '#DC2626', borderColor: '#FECACA' }}
                 >
                   Cancel Slot
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteAppointment(selectedApt.id)}
+                  className="btn btn-outline btn-sm"
+                  style={{ color: '#DC2626', borderColor: '#FECACA', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Trash2 size={14} />
+                  <span>Delete Appointment</span>
                 </button>
               </div>
 

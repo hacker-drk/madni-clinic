@@ -14,6 +14,7 @@ import {
   ArrowRight,
   RefreshCw,
   Phone,
+  Trash2,
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
@@ -65,6 +66,20 @@ export default function AdminDashboardPage() {
       }
     } catch (e) {
       console.error('Failed to update status', e);
+    }
+  };
+
+  const handleDeleteAppointment = async (appointmentId: number) => {
+    if (!confirm('Are you sure you want to permanently delete this appointment?')) return;
+    try {
+      const res = await fetch(`/api/appointments/${appointmentId}`, { method: 'DELETE' });
+      if (res.ok) {
+        loadStats();
+      } else {
+        alert('Failed to delete appointment.');
+      }
+    } catch (e) {
+      console.error('Failed to delete appointment', e);
     }
   };
 
@@ -226,6 +241,15 @@ export default function AdminDashboardPage() {
                                   Complete
                                 </button>
                               )}
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteAppointment(apt.id)}
+                                className="btn btn-outline btn-sm"
+                                style={{ color: '#DC2626', borderColor: '#FECACA', padding: '0.2rem 0.5rem', fontSize: '0.75rem' }}
+                                title="Delete Appointment"
+                              >
+                                <Trash2 size={13} />
+                              </button>
                             </div>
                           </td>
                         </tr>
@@ -258,6 +282,7 @@ export default function AdminDashboardPage() {
                         <th>Patient</th>
                         <th>Date</th>
                         <th>Status</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -281,6 +306,17 @@ export default function AdminDashboardPage() {
                             </div>
                           </td>
                           <td>{getStatusBadge(apt.status)}</td>
+                          <td>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteAppointment(apt.id)}
+                              className="btn btn-outline btn-sm"
+                              style={{ color: '#DC2626', borderColor: '#FECACA', padding: '0.2rem 0.5rem', fontSize: '0.75rem' }}
+                              title="Delete Appointment"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>

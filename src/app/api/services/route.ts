@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -82,6 +83,7 @@ export async function POST(request: NextRequest) {
       WHERE s.id = ?
     `).get(res.lastInsertRowid);
 
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, service: created });
   } catch (error: any) {
     console.error('Error creating service:', error);

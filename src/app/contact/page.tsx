@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     'Contact Madni Clinic in Dera Ismail Khan. Address: Madni Street, Gillani Town, Near Wensum College. WhatsApp: 0349-5272815.',
 };
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default function ContactPage() {

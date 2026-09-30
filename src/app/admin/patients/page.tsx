@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/AdminLayout';
-import { Users, Search, Phone, Calendar, Mail, ShieldCheck } from 'lucide-react';
+import { Users, Search, Phone, Calendar, Mail, ShieldCheck, Trash2 } from 'lucide-react';
 
 interface PatientRecord {
   patient_name: string;
@@ -42,6 +42,20 @@ export default function AdminPatientsPage() {
   useEffect(() => {
     fetchPatients();
   }, []);
+
+  const handleDeletePatient = async (phone: string, name: string) => {
+    if (!confirm(`Are you sure you want to permanently delete all records for patient ${name} (${phone})?`)) return;
+    try {
+      const res = await fetch(`/api/patients?phone=${encodeURIComponent(phone)}`, { method: 'DELETE' });
+      if (res.ok) {
+        setPatients((prev) => prev.filter((p) => p.phone !== phone));
+      } else {
+        alert('Failed to delete patient records.');
+      }
+    } catch (e) {
+      console.error('Delete patient error', e);
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,6 +111,7 @@ export default function AdminPatientsPage() {
                 <th>Age / Gender</th>
                 <th>Total Consultations</th>
                 <th>Last Visit Date</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -137,6 +152,17 @@ export default function AdminPatientsPage() {
                     <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>
                       {p.last_appointment_date || '—'}
                     </span>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => handleDeletePatient(p.phone, p.patient_name)}
+                      className="btn btn-outline btn-sm"
+                      style={{ color: '#DC2626', borderColor: '#FECACA', padding: '0.25rem 0.55rem' }}
+                      title="Delete Patient Records"
+                    >
+                      <Trash2 size={14} />
+                    </button>
                   </td>
                 </tr>
               ))}

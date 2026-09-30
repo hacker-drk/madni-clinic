@@ -12,6 +12,9 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const viewport: Viewport = {
   themeColor: '#155E75',
   width: 'device-width',

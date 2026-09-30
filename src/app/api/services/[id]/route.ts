@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -70,6 +71,7 @@ export async function PATCH(
       WHERE s.id = ?
     `).get(id);
 
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, service: updated });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
@@ -94,6 +96,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Service not found' }, { status: 404 });
     }
 
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, message: 'Service deleted.' });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });

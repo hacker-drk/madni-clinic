@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -79,6 +80,7 @@ export async function POST(request: NextRequest) {
     );
 
     const created = db.prepare('SELECT * FROM doctors WHERE id = ?').get(result.lastInsertRowid);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, doctor: created });
   } catch (error: any) {
     console.error('Error adding doctor:', error);

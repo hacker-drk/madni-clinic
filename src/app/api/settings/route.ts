@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -56,6 +57,7 @@ export async function PATCH(request: NextRequest) {
     db.prepare(sql).run(...values);
 
     const updated = db.prepare('SELECT * FROM clinic_settings WHERE id = 1').get();
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, settings: updated });
   } catch (error: any) {
     console.error('Settings PATCH error:', error);

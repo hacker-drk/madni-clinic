@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     'Meet the verified medical specialists at Madni Clinic, D.I. Khan: Lady Dr. Sana Bashir (Gynaecologist) and Dr. Sharjeel (Skin Specialist – Medical Specialist).',
 };
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default function DoctorsPage() {

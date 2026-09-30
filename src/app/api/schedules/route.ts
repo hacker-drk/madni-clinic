@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -107,6 +108,7 @@ export async function POST(request: NextRequest) {
       is_active ? 1 : 0
     );
 
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, message: 'Schedule updated.' });
   } catch (error: any) {
     console.error('Error saving schedule:', error);

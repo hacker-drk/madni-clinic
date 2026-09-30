@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     'Learn about Madni Clinic in D.I. Khan, providing personalized patient care, specialized women healthcare, and dermatology services in a clean clinical environment.',
 };
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default function AboutPage() {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -42,3 +43,28 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const admin = await getAuthenticatedAdmin();
+    if (!admin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const phone = searchParams.get('phone');
+    if (!phone) {
+      return NextResponse.json({ error: 'Patient phone number is required.' }, { status: 400 });
+    }
+
+    const db = getDb();
+    const res = db.prepare('DELETE FROM appointments WHERE phone = ?').run(phone);
+
+    revalidatePath('/', 'layout');
+    return NextResponse.json({ success: true, message: `Deleted ${res.changes} appointment(s) for patient.` });
+  } catch (error) {
+    console.error('Error deleting patient:', error);
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+  }
+}
+

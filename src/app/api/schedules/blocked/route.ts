@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -38,6 +39,7 @@ export async function POST(request: NextRequest) {
         ON CONFLICT(doctor_id, date, time) DO UPDATE SET reason = excluded.reason
       `).run(parseInt(doctor_id, 10), date, time, reason || 'Slot reserved');
 
+      revalidatePath('/', 'layout');
       return NextResponse.json({ success: true, message: 'Time slot blocked successfully.' });
     }
 
@@ -69,6 +71,7 @@ export async function DELETE(request: NextRequest) {
       db.prepare('DELETE FROM blocked_slots WHERE id = ?').run(id);
     }
 
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, message: 'Unblocked successfully.' });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });

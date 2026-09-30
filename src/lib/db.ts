@@ -207,6 +207,7 @@ function getInitialData(): DatabaseSchema {
 
 class Store {
   private data: DatabaseSchema;
+  private lastLoadedMtime: number = 0;
 
   constructor() {
     this.data = this.load();
@@ -215,6 +216,8 @@ class Store {
   private load(): DatabaseSchema {
     try {
       if (fs.existsSync(storagePath)) {
+        const stats = fs.statSync(storagePath);
+        this.lastLoadedMtime = stats.mtimeMs;
         const raw = fs.readFileSync(storagePath, 'utf8');
         const parsed = JSON.parse(raw);
         // Ensure all keys exist
@@ -255,23 +258,42 @@ class Store {
       if (!fs.existsSync(storageDir)) {
         fs.mkdirSync(storageDir, { recursive: true });
       }
-      fs.writeFileSync(storagePath, JSON.stringify(customData || this.data, null, 2), 'utf8');
+      const toSave = customData || this.data;
+      fs.writeFileSync(storagePath, JSON.stringify(toSave, null, 2), 'utf8');
+      if (fs.existsSync(storagePath)) {
+        this.lastLoadedMtime = fs.statSync(storagePath).mtimeMs;
+      }
+      if (customData) {
+        this.data = customData;
+      }
     } catch (e) {
       // In read-only environments (e.g. edge), gracefully ignore filesystem write errors
     }
   }
 
   public getData(): DatabaseSchema {
+    try {
+      if (fs.existsSync(storagePath)) {
+        const stats = fs.statSync(storagePath);
+        if (stats.mtimeMs > this.lastLoadedMtime) {
+          const raw = fs.readFileSync(storagePath, 'utf8');
+          this.data = JSON.parse(raw);
+          this.lastLoadedMtime = stats.mtimeMs;
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
     return this.data;
   }
 }
 
 // Global Singleton in memory across warm lambdas / dev server
 const globalForStore = global as unknown as { __madniStore?: Store };
-const storeInstance = globalForStore.__madniStore || new Store();
-if (process.env.NODE_ENV !== 'production') {
-  globalForStore.__madniStore = storeInstance;
+if (!globalForStore.__madniStore) {
+  globalForStore.__madniStore = new Store();
 }
+const storeInstance = globalForStore.__madniStore;
 
 export function getDb() {
   const store = storeInstance;
@@ -639,6 +661,24 @@ export function getDb() {
             return { lastInsertRowid: 0, changes };
           }
 
+          if (q.startsWith('DELETE FROM appointments WHERE id = ?')) {
+            const id = Number(params[0]);
+            const initLen = d.appointments.length;
+            d.appointments = d.appointments.filter((a) => a.id !== id);
+            changes = initLen - d.appointments.length;
+            store.persist();
+            return { lastInsertRowid: 0, changes };
+          }
+
+          if (q.startsWith('DELETE FROM appointments WHERE phone = ?')) {
+            const phone = String(params[0]);
+            const initLen = d.appointments.length;
+            d.appointments = d.appointments.filter((a) => a.phone !== phone);
+            changes = initLen - d.appointments.length;
+            store.persist();
+            return { lastInsertRowid: 0, changes };
+          }
+
           // 3. clinic_settings UPDATE
           if (q.startsWith('UPDATE clinic_settings SET')) {
             // Example allowed fields
@@ -721,6 +761,17 @@ export function getDb() {
               store.persist();
             }
             return { lastInsertRowid: id, changes };
+          }
+
+          if (q.startsWith('DELETE FROM doctors WHERE id = ?')) {
+            const id = Number(params[0]);
+            const initLen = d.doctors.length;
+            d.doctors = d.doctors.filter((doc) => doc.id !== id);
+            d.services = d.services.filter((s) => s.doctor_id !== id);
+            d.schedules = d.schedules.filter((s) => s.doctor_id !== id);
+            changes = initLen - d.doctors.length;
+            store.persist();
+            return { lastInsertRowid: 0, changes };
           }
 
           // 5. services INSERT / UPDATE / DELETE

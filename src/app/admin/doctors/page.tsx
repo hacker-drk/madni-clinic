@@ -14,6 +14,7 @@ import {
   Award,
   Phone,
   MessageCircle,
+  Trash2,
 } from 'lucide-react';
 
 export default function AdminDoctorsPage() {
@@ -121,6 +122,23 @@ export default function AdminDoctorsPage() {
     }
   };
 
+  const handleDeleteDoctor = async (id: number, name: string) => {
+    if (!confirm(`Are you sure you want to permanently delete ${name}? This will also delete their associated services and schedules.`)) return;
+    try {
+      const res = await fetch(`/api/doctors/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setDoctors((prev) => prev.filter((d) => d.id !== id));
+        if (editingDoctor?.id === id) {
+          setEditingDoctor(null);
+        }
+      } else {
+        alert('Failed to delete doctor.');
+      }
+    } catch (e) {
+      console.error('Delete doctor error', e);
+    }
+  };
+
   return (
     <AdminLayout>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
@@ -193,6 +211,15 @@ export default function AdminDoctorsPage() {
                   title="Edit Doctor"
                 >
                   <Edit2 size={15} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteDoctor(doc.id, doc.name)}
+                  className="btn btn-outline btn-sm"
+                  title="Delete Doctor"
+                  style={{ color: '#DC2626', borderColor: '#FECACA' }}
+                >
+                  <Trash2 size={15} />
                 </button>
               </div>
             </div>
@@ -397,14 +424,29 @@ export default function AdminDoctorsPage() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.5rem', borderTop: '1px solid var(--color-border)', paddingTop: '1.25rem' }}>
-                <button type="button" onClick={() => setEditingDoctor(null)} className="btn btn-outline">
-                  Cancel
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  <Save size={16} />
-                  <span>Save Doctor</span>
-                </button>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem', borderTop: '1px solid var(--color-border)', paddingTop: '1.25rem' }}>
+                <div>
+                  {!isNew && editingDoctor.id && (
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteDoctor(editingDoctor.id!, editingDoctor.name || 'this doctor')}
+                      className="btn btn-outline btn-sm"
+                      style={{ color: '#DC2626', borderColor: '#FECACA', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                    >
+                      <Trash2 size={14} />
+                      <span>Delete Doctor</span>
+                    </button>
+                  )}
+                </div>
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                  <button type="button" onClick={() => setEditingDoctor(null)} className="btn btn-outline">
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    <Save size={16} />
+                    <span>Save Doctor</span>
+                  </button>
+                </div>
               </div>
             </form>
           </div>

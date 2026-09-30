@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/db';
 import { getAuthenticatedAdmin } from '@/lib/auth';
 
@@ -76,9 +77,36 @@ export async function PATCH(
     }
 
     const updated = db.prepare('SELECT * FROM doctors WHERE id = ?').get(id);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ success: true, doctor: updated });
   } catch (error: any) {
     console.error('Error updating doctor:', error);
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const admin = await getAuthenticatedAdmin();
+    if (!admin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const db = getDb();
+    const res = db.prepare('DELETE FROM doctors WHERE id = ?').run(id);
+
+    if (res.changes === 0) {
+      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
+    }
+
+    revalidatePath('/', 'layout');
+    return NextResponse.json({ success: true, message: 'Doctor deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting doctor:', error);
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
