@@ -27,7 +27,7 @@ export function Footer({ settings }: FooterProps) {
   const phone = settings?.phone || '0349-5272815';
   const whatsapp = settings?.whatsapp || '0349-5272815';
   const address = settings?.address || 'Madni Street, Gillani Town, Near Wensum College, D.I. Khan';
-  const hours = settings?.opening_hours || 'Monday – Saturday: 09:00 AM – 08:00 PM (Doctor specific timings)';
+  const hours = settings?.opening_hours || '24/7 Hours (Open 24 Hours / 7 Days a Week)';
 
   const cleanWhatsapp = whatsapp.replace(/[^0-9]/g, '');
   const internationalWa = cleanWhatsapp.startsWith('0') ? '92' + cleanWhatsapp.slice(1) : cleanWhatsapp;

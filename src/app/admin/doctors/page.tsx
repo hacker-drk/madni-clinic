@@ -327,7 +327,7 @@ export default function AdminDoctorsPage() {
                   type="text"
                   value={editingDoctor.qualification || ''}
                   onChange={(e) => setEditingDoctor({ ...editingDoctor, qualification: e.target.value })}
-                  placeholder="e.g. MBBS, DOVH"
+                  placeholder="e.g. MBBS, DOWH"
                   className="form-input"
                 />
               </div>

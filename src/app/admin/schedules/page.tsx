@@ -97,10 +97,10 @@ export default function AdminSchedulesPage() {
           doctor_id: selectedDoctorId,
           day_of_week: dow,
           day_name: dayObj?.name || 'Day',
-          start_time: '09:00',
-          end_time: '14:00',
-          break_start: '12:00',
-          break_end: '12:30',
+          start_time: '00:00',
+          end_time: '24:00',
+          break_start: '',
+          break_end: '',
           appointment_duration: 30,
           is_active: 1,
           [field]: val,
@@ -266,12 +266,12 @@ export default function AdminSchedulesPage() {
                   doctor_id: selectedDoctorId,
                   day_of_week: day.dow,
                   day_name: day.name,
-                  start_time: '09:00',
-                  end_time: '13:00',
-                  break_start: '11:00',
-                  break_end: '11:30',
+                  start_time: '00:00',
+                  end_time: '24:00',
+                  break_start: '',
+                  break_end: '',
                   appointment_duration: 30,
-                  is_active: day.dow === 0 ? 0 : 1, // Sunday closed by default
+                  is_active: 1, // 24/7 active by default
                 };
 
                 return (

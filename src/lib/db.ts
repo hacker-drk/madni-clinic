@@ -43,7 +43,7 @@ function getInitialData(): DatabaseSchema {
     whatsapp: '0349-5272815',
     email: 'info@madniclinic.com',
     address: 'Madni Street, Gillani Town, Near Wensum College, D.I. Khan, Khyber Pakhtunkhwa, Pakistan',
-    opening_hours: 'Monday – Saturday: 09:00 AM – 08:00 PM | Sunday: Closed',
+    opening_hours: '24/7 Hours (Open 24 Hours / 7 Days a Week)',
     map_url: 'https://maps.google.com/maps?q=Madni+Street+Gillani+Town+Near+Wensum+College+D.I.+Khan&t=&z=15&ie=UTF8&iwloc=&output=embed',
     logo: '/logo.svg',
     consultation_fee_note: 'Information will be updated soon.',
@@ -58,7 +58,7 @@ function getInitialData(): DatabaseSchema {
       name: 'Lady Dr. Sana Bashir',
       slug: 'lady-dr-sana-bashir',
       title: 'Lady Dr.',
-      qualification: 'MBBS, DOVH',
+      qualification: 'MBBS, DOWH',
       specialization: 'Gynaecologist',
       professional_affiliation: 'Royal College of Physician (Ireland)',
       biography: "Lady Dr. Sana Bashir is a specialized Gynaecologist providing comprehensive women's healthcare and compassionate clinical consultations at Madni Clinic, D.I. Khan.",
@@ -98,34 +98,37 @@ function getInitialData(): DatabaseSchema {
     { dow: 4, name: 'Thursday' },
     { dow: 5, name: 'Friday' },
     { dow: 6, name: 'Saturday' },
+    { dow: 0, name: 'Sunday' },
   ];
 
   const initialSchedules: Schedule[] = [];
   let sId = 1;
+  // Doctor 1: 24/7 Hours availability across all 7 days
   days.forEach((d) => {
     initialSchedules.push({
       id: sId++,
       doctor_id: 1,
       day_of_week: d.dow,
       day_name: d.name,
-      start_time: '09:00',
-      end_time: '13:00',
-      break_start: '11:00',
-      break_end: '11:30',
+      start_time: '00:00',
+      end_time: '24:00',
+      break_start: null,
+      break_end: null,
       appointment_duration: 30,
       is_active: 1,
     });
   });
+  // Doctor 2: 24/7 Hours availability across all 7 days
   days.forEach((d) => {
     initialSchedules.push({
       id: sId++,
       doctor_id: 2,
       day_of_week: d.dow,
       day_name: d.name,
-      start_time: '15:00',
-      end_time: '20:00',
-      break_start: '17:30',
-      break_end: '18:00',
+      start_time: '00:00',
+      end_time: '24:00',
+      break_start: null,
+      break_end: null,
       appointment_duration: 30,
       is_active: 1,
     });
@@ -216,7 +219,28 @@ class Store {
         const parsed = JSON.parse(raw);
         // Ensure all keys exist
         const initial = getInitialData();
-        return { ...initial, ...parsed };
+        const merged = { ...initial, ...parsed };
+
+        // Auto-migrate qualifications if old DOVH is found
+        if (Array.isArray(merged.doctors)) {
+          const doc1 = merged.doctors.find((d: any) => d.id === 1);
+          if (doc1 && (doc1.qualification === 'MBBS, DOVH' || doc1.qualification?.includes('DOVH'))) {
+            doc1.qualification = 'MBBS, DOWH';
+          }
+        }
+
+        // Auto-migrate opening hours if old hours are found
+        if (merged.clinic_settings && (!merged.clinic_settings.opening_hours || merged.clinic_settings.opening_hours.includes('09:00 AM') || merged.clinic_settings.opening_hours.includes('Monday – Saturday'))) {
+          merged.clinic_settings.opening_hours = '24/7 Hours (Open 24 Hours / 7 Days a Week)';
+        }
+
+        // Auto-migrate schedules to 24/7 if older default 12-item schedules are found
+        if (Array.isArray(merged.schedules) && merged.schedules.length <= 12) {
+          merged.schedules = initial.schedules;
+        }
+
+        this.persist(merged);
+        return merged;
       }
     } catch (e) {
       console.warn('Could not read store file, using in-memory defaults', e);

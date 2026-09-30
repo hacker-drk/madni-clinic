@@ -55,7 +55,7 @@ async function runTests() {
   // 3. Doctor 1 Profile
   const doc1Res = await request({ host: 'localhost', port: 3000, path: '/doctors/lady-dr-sana-bashir', method: 'GET' });
   assert(doc1Res.statusCode === 200, '/doctors/lady-dr-sana-bashir returns 200 OK');
-  assert(doc1Res.body.includes('MBBS, DOVH'), 'Lady Dr. Sana Bashir qualifications displayed');
+  assert(doc1Res.body.includes('MBBS, DOWH'), 'Lady Dr. Sana Bashir qualifications displayed');
   assert(doc1Res.body.includes('Royal College of Physician (Ireland)'), 'Lady Dr. Sana Bashir affiliation displayed');
 
   // 4. Doctor 2 Profile

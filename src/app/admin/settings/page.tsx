@@ -157,7 +157,7 @@ export default function AdminSettingsPage() {
                 type="text"
                 value={settings.opening_hours || ''}
                 onChange={(e) => setSettings({ ...settings, opening_hours: e.target.value })}
-                placeholder="Monday – Saturday: 09:00 AM – 08:00 PM | Sunday: Closed"
+                placeholder="24/7 Hours (Open 24 Hours / 7 Days a Week)"
                 className="form-input"
               />
             </div>

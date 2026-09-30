@@ -81,7 +81,7 @@ export default function RootLayout({
     phone: '0349-5272815',
     whatsapp: '0349-5272815',
     address: 'Madni Street, Gillani Town, Near Wensum College, D.I. Khan, Khyber Pakhtunkhwa, Pakistan',
-    opening_hours: 'Monday – Saturday: 09:00 AM – 08:00 PM | Sunday: Closed',
+    opening_hours: '24/7 Hours (Open 24 Hours / 7 Days a Week)',
   };
 
   try {
@@ -117,9 +117,9 @@ export default function RootLayout({
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        opens: '09:00',
-        closes: '20:00',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
       },
     ],
     medicalSpecialty: ['Gynecologic', 'Dermatology'],

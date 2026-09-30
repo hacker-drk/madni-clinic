@@ -385,7 +385,7 @@ Appointment Reference: ${appointment.reference_number}`;
                 <div style={{ padding: '1.5rem', background: '#F8FAFC', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', color: 'var(--color-text-secondary)' }}>
                   <strong>No scheduled clinic hours on this day.</strong>
                   <div style={{ fontSize: '0.875rem', marginTop: '0.25rem' }}>
-                    Please choose another day (e.g., Monday through Saturday).
+                    Please choose another day.
                   </div>
                 </div>
               ) : slotsData?.slots.length === 0 ? (

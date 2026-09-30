@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Doctor } from '@/lib/types';
-import { Calendar, User, MessageCircle, Phone, ArrowRight, Award } from 'lucide-react';
+import { Calendar, User, MessageCircle, Phone, ArrowRight, Award, Clock } from 'lucide-react';
 
 interface DoctorCardProps {
   doctor: Doctor;
@@ -47,6 +47,11 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
             <span>{doctor.professional_affiliation}</span>
           </div>
         )}
+
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', backgroundColor: '#ECFDF5', color: '#065F46', border: '1px solid #A7F3D0', padding: '0.2rem 0.6rem', borderRadius: 'var(--radius-full)', fontSize: '0.78rem', fontWeight: 600, marginTop: '0.35rem', marginBottom: '0.4rem' }}>
+          <Clock size={13} />
+          <span>Available 24/7 Hours</span>
+        </div>
 
         <p className="doctor-bio-snippet">{doctor.biography}</p>
 

@@ -240,10 +240,15 @@ export default async function DoctorProfilePage({ params }: Props) {
 
               {/* Weekly Schedule */}
               <div>
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Clock size={16} style={{ color: 'var(--color-primary)' }} />
-                  <span>Weekly Clinic Hours</span>
-                </h4>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem' }}>
+                  <h4 style={{ fontSize: '0.95rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem', margin: 0 }}>
+                    <Clock size={16} style={{ color: 'var(--color-primary)' }} />
+                    <span>Weekly Clinic Hours</span>
+                  </h4>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#065F46', backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0', padding: '0.15rem 0.5rem', borderRadius: 'var(--radius-full)' }}>
+                    24/7 Available
+                  </span>
+                </div>
 
                 {schedules.length === 0 ? (
                   <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
@@ -251,22 +256,25 @@ export default async function DoctorProfilePage({ params }: Props) {
                   </div>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', fontSize: '0.85rem' }}>
-                    {schedules.map((s) => (
-                      <div
-                        key={s.id}
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          padding: '0.35rem 0',
-                          borderBottom: '1px solid #F1F5F9',
-                        }}
-                      >
-                        <span style={{ fontWeight: 600 }}>{s.day_name}</span>
-                        <span style={{ color: 'var(--color-text-secondary)' }}>
-                          {formatTime12(s.start_time)} – {formatTime12(s.end_time)}
-                        </span>
-                      </div>
-                    ))}
+                    {schedules.map((s) => {
+                      const is24_7 = s.start_time === '00:00' && (s.end_time === '24:00' || s.end_time === '23:59' || s.end_time === '00:00');
+                      return (
+                        <div
+                          key={s.id}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            padding: '0.35rem 0',
+                            borderBottom: '1px solid #F1F5F9',
+                          }}
+                        >
+                          <span style={{ fontWeight: 600 }}>{s.day_name}</span>
+                          <span style={{ color: is24_7 ? '#059669' : 'var(--color-text-secondary)', fontWeight: is24_7 ? 600 : 400 }}>
+                            {is24_7 ? '24 Hours Open (24/7)' : `${formatTime12(s.start_time)} – ${formatTime12(s.end_time)}`}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>

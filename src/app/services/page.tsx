@@ -76,7 +76,7 @@ export default function ServicesPage() {
                   Gynaecology Services
                 </h2>
                 <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
-                  Led by Lady Dr. Sana Bashir (MBBS, DOVH, Royal College of Physician Ireland)
+                  Led by Lady Dr. Sana Bashir (MBBS, DOWH, Royal College of Physician Ireland)
                 </p>
               </div>
             </div>
